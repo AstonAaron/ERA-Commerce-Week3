@@ -27,7 +27,9 @@ const getCategorySales = (req, res) => {
 const getInventory = (req, res) => {
     const sql = "SELECT p.id, p.name, p.stock_quantity, c.name AS category_name, CASE WHEN p.stock_quantity > 10 then 'in_stock' WHEN p.stock_quantity > 0 THEN 'low_stock' ELSE 'out_of_stock' END AS stock_status FROM products p INNER JOIN categories c ON c.id = p.category_id ORDER BY p.stock_quantity ASC";
     db.query(sql, (err, results) => {
-        if (err) return res.status(500).json({ message: "Server Error" });
+        if (err)
+            console.error(err);
+            return res.status(500).json({ message: "Server Error" });
         res.json(results);
     });
 };
